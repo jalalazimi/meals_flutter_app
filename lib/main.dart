@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meals/categories_screen.dart';
+import 'screens/categories_screen.dart';
+import 'screens/category_meals_screen.dart';
+import 'screens/meal_detail_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,31 +12,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Daily Meals',
       theme: ThemeData(
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CategoriesScreen(),
+      routes: {
+        '/': (ctx) => CategoriesScreen(),
+        CategoriesMealsScreen.routeName: (ctx) => CategoriesMealsScreen(),
+        MealDetailScreen.routeName: (ctx) => MealDetailScreen()
+      },
+      onGenerateRoute: (settings) {
+        print(settings.arguments);
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (ctx) => CategoriesScreen(),
+        );
+      },
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Text('hello'));
   }
 }
